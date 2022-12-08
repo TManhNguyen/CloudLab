@@ -1,43 +1,43 @@
-import time 
+import time
 
-import board 
+import board
 
-import adafruit_dht 
+import adafruit_dht
 
-import psutil 
+import psutil
 
-# We first check if a libgpiod process is running. If yes, we kill it! 
+# We first check if a libgpiod process is running. If yes, we kill it!
 
-for proc in psutil.process_iter(): 
+for proc in psutil.process_iter():
 
-    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei': 
+    if proc.name() == 'libgpiod_pulsein' or proc.name() == 'libgpiod_pulsei':
 
-        proc.kill() 
+        proc.kill()
 
-sensor = adafruit_dht.DHT11(board.D17) 
+sensor = adafruit_dht.DHT22(board.D17) 
 
-while True: 
+while True:
 
-    try: 
+    try:
 
-        temp = sensor.temperature 
+        temp = sensor.temperature
 
-        humidity = sensor.humidity 
+        humidity = sensor.humidity
 
-        print("Temperature: {}*C   Humidity: {}% ".format(temp, humidity)) 
+        print("Temperature: {}*C   Humidity: {}% ".format(temp, humidity))
 
-    except RuntimeError as error: 
+    except RuntimeError as error:
 
-        print(error.args[0]) 
+        print(error.args[0])
 
-        time.sleep(2.0) 
+        time.sleep(2.0)
 
-        continue 
+        continue
 
-    except Exception as error: 
+    except Exception as error:
 
-        sensor.exit() 
+        sensor.exit()
 
-        raise error 
+        raise error
 
-    time.sleep(2.0) 
+    time.sleep(2.0)
